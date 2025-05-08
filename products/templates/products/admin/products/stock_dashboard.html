@@ -1,0 +1,35 @@
+<!-- templates/admin/stock_dashboard.html -->
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+<div class="stock-dashboard">
+    <h2>Inventory Overview</h2>
+    
+    <div class="metric">
+        <h3>Low Stock (<5 units)</h3>
+        <ul>
+        {% for product in low_stock %}
+            <li>{{ product.name }}: {{ product.stock_quantity }} units</li>
+        {% empty %}
+            <li>No low stock items</li>
+        {% endfor %}
+        </ul>
+    </div>
+    
+    <div class="metric">
+        <h3>Out of Stock</h3>
+        <ul>
+        {% for product in out_of_stock %}
+            <li>{{ product.name }}</li>
+        {% empty %}
+            <li>All products in stock</li>
+        {% endfor %}
+        </ul>
+    </div>
+    
+    <div class="metric">
+        <h3>Total Products</h3>
+        <p>{{ total_products }}</p>
+    </div>
+</div>
+{% endblock %}

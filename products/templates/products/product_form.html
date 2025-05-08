@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ action }} - Hardware Store{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-body">
+    <h2 class="card-title">{{ action }}</h2>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-primary">{{ action }}</button>
+      <a href="{% url 'products:list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+  </div>
+</div>
+{% endblock %}

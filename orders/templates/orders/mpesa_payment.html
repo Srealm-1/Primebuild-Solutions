@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M-PESA Payment</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .mpesa-box {
+            max-width: 350px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        .mpesa-header {
+            background-color: #35b53c;
+            color: white;
+            padding: 10px;
+            font-weight: bold;
+            border-radius: 8px 8px 0 0;
+        }
+        .mpesa-body {
+            padding: 15px;
+        }
+        .mpesa-footer {
+            padding-top: 10px;
+        }
+        .btn-mpesa {
+            background-color: #35b53c;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn-mpesa:hover {
+            background-color: #2e9e34;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="mpesa-box">
+        <div class="mpesa-header">M-PESA Payment</div>
+        <div class="mpesa-body">
+            <p>A payment request has been sent to:</p>
+            <h4 id="phone-number">{{ phone }}</h4> <!-- Dynamically display phone number -->
+            <p>Enter your Mpesa PIN on your phone to complete the transaction.</p>
+            <p>Amount: <strong id="amount">KES {{ amount }}</strong></p> <!-- Display the order amount -->
+
+            <!-- Payment Confirmation Button -->
+            <button id="confirm-payment-btn" class="btn-mpesa">Confirm Payment</button>
+
+            <div class="mpesa-footer">
+                <a href="{% url 'orders:checkout' %}" class="btn btn-danger btn-sm mt-2">Cancel</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript for Handling Payment Confirmation -->
+    {% comment %} <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const confirmBtn = document.getElementById("confirm-payment-btn");
+    
+            if (!confirmBtn) {
+                console.error("Confirm Payment button not found!");
+                return;
+            }
+    
+            confirmBtn.addEventListener("click", function () {
+                console.log("Confirm Payment button clicked!");
+    
+                const phoneNumber = document.getElementById("phone-number").innerText.trim();
+                const amount = document.getElementById("amount").innerText.replace("KES", "").trim();
+    
+                console.log("Sending request to Django with:", { phone: phoneNumber, amount: amount });
+    
+                fetch("{% url 'orders:confirm_payment' %}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": "{{ csrf_token }}"
+                    },
+                    body: JSON.stringify({
+                        phone: phoneNumber,
+                        amount: amount
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Django Response:", data);
+                    if (data.status === "success") {
+                        console.log("Redirecting to:", data.redirect_url);
+                        window.location.href = data.redirect_url;
+                    } else {
+                        alert("Payment failed: " + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error("Error during payment confirmation:", error);
+                    alert("An error occurred while processing your payment.");
+                });
+            });
+        });
+    </script>
+     {% endcomment %}
+    
+        
+</body>
+</html>

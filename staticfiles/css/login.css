@@ -1,0 +1,94 @@
+/*
+  PRIMEBUILD login styles (adapted from Django admin)
+  -----------------------------------------
+  This CSS is meant for a single login page.
+  Make sure your HTML uses matching classes/IDs:
+    <div class="login">
+      <div class="login-container">
+        <h1>My Login</h1>
+        <form>
+          <div class="form-row">
+            <label for="id_username">Username</label>
+            <input id="id_username" name="username" type="text" />
+          </div>
+          <div class="form-row">
+            <label for="id_password">Password</label>
+            <input id="id_password" name="password" type="password" />
+          </div>
+          <div class="submit-row">
+            <button type="submit">Log In</button>
+          </div>
+          <p class="password-reset-link">
+            <a href="#">Forgot Password?</a>
+          </p>
+        </form>
+      </div>
+    </div>
+*/
+
+/* Wrapper for the login page background & alignment */
+.login {
+    background: var(--darkened-bg);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Optional padding if you want space around the container */
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  /* Main container for the login box */
+  .login-container {
+    background: var(--body-bg);
+    border: 1px solid var(--hairline-color);
+    border-radius: 4px;
+    width: 28em;
+    min-width: 300px;
+    padding: 20px;
+    box-sizing: border-box;
+    /* Adjust top/bottom margin if you want the box lower or higher */
+    margin: 0 auto;
+  }
+  
+  /* Heading at the top of the container */
+  .login-container h1 {
+    font-size: 1.125rem;
+    margin: 0 0 1rem;
+    text-align: center;
+    color: var(--header-link-color); /* or any color variable you prefer */
+  }
+  
+  /* Form rows (label + input) */
+  .form-row {
+    padding: 4px 0;
+    margin-bottom: 1rem;
+  }
+  
+  .form-row label {
+    display: block;
+    line-height: 1.5em;
+    margin-bottom: 0.3rem;
+  }
+  
+  /* Username/Password inputs */
+  .form-row #id_username,
+  .form-row #id_password {
+    padding: 8px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  /* The row containing the submit button */
+  .submit-row {
+    text-align: center;
+    padding-top: 1em;
+    margin: 0;
+  }
+  
+  /* Link for password reset or other actions */
+  .password-reset-link {
+    text-align: center;
+    margin-top: 1rem;
+  }
+  

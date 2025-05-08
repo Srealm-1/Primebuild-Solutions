@@ -1,0 +1,203 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PrimeBuild Hardware - Quality Tools for Every Project</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="description" content="PrimeBuild Hardware offers high-quality tools and equipment for DIY enthusiasts and professional contractors. Visit our store for all your hardware needs.">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            blueLight: '#87CEFA',
+            blueDark: '#1E3A8A',
+          },
+        },
+      },
+      plugins: [],
+    };
+  </script>
+  <style>
+    body {
+      background:rgb(7, 145, 183);
+      padding-top: 70px;
+      color: #333;
+      transition: background 0.3s, color 0.3s;
+    }
+    .hero {
+      background: url("{% static 'images/Shopping_Carts.jpeg' %}") center center / cover no-repeat;
+      color: #fff;
+      padding: 120px 0;
+      text-align: center;
+      position: relative;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5); /* Overlay for readability */
+    }
+    .hero > * {
+      position: relative;
+      z-index: 1;
+    }
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: bold;
+    }
+    .hero p {
+      font-size: 1.6rem;
+    }
+    footer {
+      background: #1E3A8A;
+      color: #fff;
+      padding: 20px 0;
+      margin-top: 30px;
+    }
+    .dark-mode {
+      background: #000;
+      color: #e0e0e0;
+    }
+    .dark-mode .navbar,
+    .dark-mode footer {
+      background: #000 !important;
+    }
+    .dark-mode .hero {
+      background: url("{% static 'images/primebuild_background.jpeg' %}") center center / cover no-repeat;
+      color: #ddd;
+    }
+    .dark-mode-icon, .cart-icon {
+      cursor: pointer;
+      font-size: 1.5rem;
+      color: white;
+    }
+    .cart-container {
+      position: relative;
+    }
+    .cart-badge {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background: red;
+      color: white;
+      font-size: 0.75rem;
+      padding: 2px 6px;
+      border-radius: 50%;
+    }
+    .category-card {
+      background: white;
+      border-radius: 12px;
+      text-align: center;
+      transition: transform 0.3s ease;
+      overflow: hidden;
+    }
+    .dark-mode .category-card {
+      background: #333;
+    }
+    .category-image {
+      height: 200px;
+      object-fit: cover;
+      border-bottom: 3px solid #1E3A8A;
+    }
+    .dark-mode .category-image {
+      border-color: #666;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="bg-blueDark text-white p-4 flex justify-between items-center">
+    <h1 class="text-xl font-bold">PrimeBuild Hardware</h1>
+    <div class="flex items-center space-x-4">
+      <i class="fas fa-moon dark-mode-icon" onclick="toggleDarkMode()"></i>
+      <div class="cart-container">
+        <i class="fas fa-shopping-cart cart-icon"></i>
+        <span class="cart-badge">3</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero">
+    <h1>Welcome to PrimeBuild Hardware</h1>
+    <p>Your Friendly Neighborhood Store</p>
+    <a href="/products/" class="mt-6 inline-block bg-white text-blue-600 hover:bg-blue-700 hover:text-white font-bold py-2 px-4 rounded shadow-lg transition">
+      Browse Products
+    </a>
+  </header>
+
+  <!-- Category Section -->
+  <section class="container mx-auto px-4 py-16">
+    <h2 class="text-3xl font-bold text-center mb-12">Shop By Category</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 px-4">
+      
+      <!-- Hand Tools -->
+      <div class="category-card hover:transform hover:-translate-y-2 hover:shadow-xl">
+        <img src="{% static 'images/Hantools_Picture.jpeg' %}" 
+             alt="Hand Tools" 
+             class="w-full category-image">
+        <div class="p-6">
+          <h3 class="text-xl font-semibold mb-2">Hand Tools</h3>
+          <p class="text-gray-600 dark:text-gray-300">Explore our selection of high-quality hand tools</p>
+        </div>
+      </div>
+
+      <!-- Power Tools -->
+      <div class="category-card hover:transform hover:-translate-y-2 hover:shadow-xl">
+        <img src="{% static 'images/Power_Tool_Image.jpeg' %}" 
+             alt="Power Tools" 
+             class="w-full category-image">
+        <div class="p-6">
+          <h3 class="text-xl font-semibold mb-2">Power Tools</h3>
+          <p class="text-gray-600 dark:text-gray-300">Explore our selection of high-quality power tools</p>
+        </div>
+      </div>
+
+      <!-- Paint Supplies -->
+      <div class="category-card hover:transform hover:-translate-y-2 hover:shadow-xl">
+        <img src="{% static 'images/Paint_Image.jpeg' %}" 
+             alt="Paint & Supplies" 
+             class="w-full category-image">
+        <div class="p-6">
+          <h3 class="text-xl font-semibold mb-2">Paint & Supplies</h3>
+          <p class="text-gray-600 dark:text-gray-300">Explore our selection of high-quality paint & supplies</p>
+        </div>
+      </div>
+
+      <!-- Building Materials -->
+      <div class="category-card hover:transform hover:-translate-y-2 hover:shadow-xl">
+        <img src="{% static 'images/Building_Material.jpeg' %}" 
+             alt="Building Materials" 
+             class="w-full category-image">
+        <div class="p-6">
+          <h3 class="text-xl font-semibold mb-2">Building Materials</h3>
+          <p class="text-gray-600 dark:text-gray-300">Explore our selection of high-quality building materials</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="text-center p-4 bg-blueDark text-white">
+    &copy; 2025 PrimeBuild Hardware - Crafted with Passion
+  </footer>
+
+  <script>
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Your Cart - Primebuild Hardware{% endblock %}
+
+{% block content %}
+<style>
+    /* Full-page background image */
+    body {
+        background: url("{% static 'images/AdobeStock_543211583_Preview.jpeg' %}") center/cover no-repeat fixed;
+        color: white;
+        min-height: 100vh;
+        position: relative;
+    }
+
+    /* Dark overlay for better readability */
+    body::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.6); /* Adjust transparency */
+        z-index: -1;
+    }
+
+    /* Style for the cart container */
+    .cart-container {
+        background: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    table {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.9);
+        color: black;
+        border-radius: 10px;
+    }
+
+    th, td {
+        padding: 10px;
+        text-align: left;
+    }
+
+    th {
+        background: #1E3A8A;
+        color: white;
+    }
+
+    .btn {
+        padding: 8px 12px;
+        margin: 5px;
+    }
+</style>
+
+<div class="container cart-container mt-4">
+    <h2>Your Shopping Cart</h2>
+    {% if cart.cart_items.all %}
+        <table class="table mt-3">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart.cart_items.all %}
+                <tr>
+                    <td>{{ item.product.name }}</td>
+                    <td>
+                        <input type="number" 
+                               name="quantity_{{ item.id }}" 
+                               value="{{ item.quantity }}" 
+                               min="1" 
+                               class="form-control quantity-input" 
+                               data-price="{{ item.product.price }}" 
+                               style="width: 60px;">
+                    </td>
+                    <td>Ksh {{ item.product.price }}</td>
+                    <td>Ksh <span class="item-total">{{ item.total_price }}</span></td>
+                    <td>
+                        <a href="{% url 'orders:remove_from_cart' item.id %}" class="btn btn-danger btn-sm">Remove</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h4>Total Price: Ksh <span id="cart-total">{{ cart.total_price }}</span></h4>
+        <a href="{% url 'orders:checkout' %}" class="btn btn-success">Proceed to Checkout</a>
+    {% else %}
+        <p class="text-muted">Your cart is empty.</p>
+    {% endif %}
+    <a href="{% url 'products:list' %}" class="btn btn-secondary">Continue Shopping</a>
+</div>
+
+<!-- JavaScript for live total update -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const quantityInputs = document.querySelectorAll('.quantity-input');
+    const cartTotalEl = document.getElementById('cart-total');
+
+    function updateCartTotal() {
+        let total = 0;
+
+        quantityInputs.forEach(input => {
+            const price = parseFloat(input.dataset.price);
+            const quantity = parseInt(input.value) || 0;
+            const itemTotal = price * quantity;
+
+            const itemRow = input.closest('tr');
+            const itemTotalEl = itemRow.querySelector('.item-total');
+            itemTotalEl.textContent = itemTotal.toFixed(2);
+
+            total += itemTotal;
+        });
+
+        cartTotalEl.textContent = total.toFixed(2);
+    }
+
+    quantityInputs.forEach(input => {
+        input.addEventListener('input', updateCartTotal);
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Confirm Delete - Hardware Store{% endblock %}
+
+{% block content %}
+<div class="card border-danger">
+  <div class="card-body">
+    <h2 class="card-title text-danger">Confirm Delete</h2>
+    <p>Are you sure you want to delete <strong>{{ product.name }}</strong>?</p>
+    <form method="post">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger">Yes, Delete</button>
+      <!-- Updated with namespace: 'products:product_detail' -->
+      <a href="{% url 'products:product_detail' product.pk %}" class="btn btn-secondary">Cancel</a>
+    </form>
+  </div>
+</div>
+{% endblock %}

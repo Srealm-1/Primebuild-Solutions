@@ -1,0 +1,41 @@
+<!-- order_history.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Your Order History</h2>
+
+  {% if orders %}
+    <table>
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>Product</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Total</th>
+          <th>Payment Method</th>
+          <th>Status</th>
+          <th>Order Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for order in orders %}
+          {% for item in order.items.all %}
+            <tr>
+              <td>{{ order.id }}</td>
+              <td>{{ item.product.name }}</td>
+              <td>{{ item.quantity }}</td>
+              <td>{{ item.price }}</td>
+              <td>{{ order.total_price }}</td>
+              <td>{{ order.payment_method }}</td>
+              <td>{{ order.status }}</td>
+              <td>{{ order.created_at }}</td>
+            </tr>
+          {% endfor %}
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>You don't have any orders yet.</p>
+  {% endif %}
+{% endblock %}

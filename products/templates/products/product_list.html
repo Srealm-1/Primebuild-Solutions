@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+  body {
+    background: url("{% static 'images/AdobeStock_543211583_Preview.jpeg' %}") no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+  }
+
+  .product-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+  }
+
+  .product-img {
+    height: 180px;
+    object-fit: cover;
+    width: 100%;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  .card-body {
+    background: #1a1a1a;
+    color: #fff;
+    padding: 15px;
+  }
+
+  .add-to-cart-btn {
+    margin-top: 10px;
+  }
+
+  h1 {
+    color: white;
+  }
+
+  .card-text-muted {
+    color: #cccccc;
+    font-size: 0.9rem;
+  }
+
+  .form-inline {
+    display: flex;
+    gap: 10px;
+  }
+
+  .form-inline input {
+    border-radius: 5px;
+    padding: 6px 12px;
+  }
+
+  .form-inline button {
+    border-radius: 5px;
+    padding: 6px 12px;
+  }
+</style>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1>Our Products</h1>
+  <form method="GET" action="{% url 'products:list' %}" class="form-inline">
+    <input type="text" name="q" class="form-control mr-2" placeholder="Search..." value="{{ query|default:'' }}">
+    <button type="submit" class="btn btn-primary">Search</button>
+  </form>
+</div>
+
+<div class="row">
+  {% for product in products %}
+    <div class="col-md-4 mb-4 d-flex">
+      <div class="card product-card flex-fill">
+        {% if product.name == "Paint" %}
+          <img src="{% static 'images/Paint.jpeg' %}" alt="{{ product.name }}" class="product-img">
+        {% elif product.name == "Sandpaper" %}
+          <img src="{% static 'images/Sandpaper.jpeg' %}" alt="{{ product.name }}" class="product-img">
+        {% elif product.name == "Fibre Cables" %}
+          <img src="{% static 'images/Fibre Cable.jpeg' %}" alt="{{ product.name }}" class="product-img">
+        {% elif product.name == "Cement" %}
+          <img src="{% static 'images/Cement.jpeg' %}" alt="{{ product.name }}" class="product-img">
+        {% elif product.name == "Tape Measure" %}
+          <img src="{% static 'images/Tape Measure.jpeg' %}" alt="{{ product.name }}" class="product-img">
+        {% elif product.name == "Chisel Set" %}
+          <img src="{% static 'images/Chisel Set.jpeg' %}" alt="{{ product.name }}" class="product-img">
+        {% elif product.name == "Car Jack" %}
+          <img src="{% static 'images/Car Jack.jpeg' %}" alt="{{ product.name }}" class="product-img">
+        {% elif product.name == "Pipes" %}
+          <img src="{% static 'images/Pipes.jpeg' %}" alt="{{ product.name }}" class="product-img">
+        {% elif product.name == "Safety Gloves" %}
+          <img src="{% static 'images/Safety Gloves.jpeg' %}" alt="{{ product.name }}" class="product-img">
+        {% elif product.name == "Safety Helmet" %}
+          <img src="{% static 'images/Safety Helmet.jpeg' %}" alt="{{ product.name }}" class="product-img">
+        {% elif product.name == "NAILS" %}
+          <img src="{% static 'images/Nails.jpeg' %}" alt="{{ product.name }}" class="product-img">
+        {% elif product.name == "Hammer" %}
+          <img src="{% static 'images/Hammer.jpeg' %}" alt="{{ product.name }}" class="product-img">
+        {% else %}
+          <img src="{% static 'images/placeholder-product.jpg' %}" alt="Product Image" class="product-img">
+        {% endif %}
+        <div class="card-body">
+          <h5 class="card-title">{{ product.name }}</h5>
+          <p class="card-text text-success fw-bold">Ksh {{ product.price }}</p>
+          {% if product.description %}
+            <p class="card-text-muted">{{ product.description|truncatewords:10 }}</p>
+          {% endif %}
+          <a href="{% url 'orders:add_to_cart' product.pk %}" class="btn btn-outline-success btn-sm add-to-cart-btn">
+            Add to Cart
+          </a>
+        </div>
+      </div>
+    </div>
+  {% empty %}
+    <div class="col-12">
+      <p class="text-center text-light">No products available.</p>
+    </div>
+  {% endfor %}
+</div>
+
+{% if page_obj %}
+<nav aria-label="Page navigation">
+  <ul class="pagination justify-content-center mt-4">
+    {% if page_obj.has_previous %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+    {% endif %}
+    {% for num in page_obj.paginator.page_range %}
+      {% if page_obj.number == num %}
+        <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+      {% else %}
+        <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    {% endif %}
+  </ul>
+</nav>
+{% endif %}
+{% endblock %}

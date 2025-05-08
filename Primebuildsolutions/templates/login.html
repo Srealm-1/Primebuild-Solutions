@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Primebuild Login</title>
+  <style>
+    body {
+      margin: 0;
+      background: url("{% static 'images/AdobeStock_543211583_Preview.jpeg' %}") 
+                  center/cover no-repeat fixed;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 400px;
+      margin: 80px auto;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    .container img {
+      width: 320px;
+      height: auto;
+      margin-bottom: 20px;
+    }
+    h2 {
+      margin: 0 0 20px;
+      color: #333;
+    }
+    form {
+      text-align: left;
+    }
+    label {
+      display: block;
+      margin: 15px 0 5px;
+      color: #333;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    .login-btn {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      background: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .login-btn:hover {
+      background: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="{% static 'images/Primebuild logo.jpg' %}" alt="Primebuild Logo">
+    <h2>Please log in to continue</h2>
+
+    <form method="POST" autocomplete="off">
+      {% csrf_token %}
+      <!-- Hidden dummy fields to prevent autofill -->
+      <input type="text" name="fake_username" style="display: none;">
+      <input type="password" name="fake_password" style="display: none;">
+
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required autocomplete="off">
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required autocomplete="new-password">
+
+      <button type="submit" class="login-btn">Log in</button>
+    </form>
+  </div>
+</body>
+</html>
